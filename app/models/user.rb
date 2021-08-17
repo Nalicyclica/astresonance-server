@@ -6,4 +6,12 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   include DeviseTokenAuth::Concerns::User
+
+  with_options presence: true do
+    validates :nickname, uniqueness: true
+    validates :icon_color, format: { with: /\A(#[A-Fa-f\d]{3}|#[A-Fa-f\d]{6})\z/, message: 'must be a color format of #aaaaaa' }
+  end
+
+  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
+  validates_format_of :password, with: PASSWORD_REGEX, message: 'must contain alphabets and numbers'
 end
