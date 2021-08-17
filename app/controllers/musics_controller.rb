@@ -13,6 +13,6 @@ class MusicsController < ApplicationController
     else
       musics = Music.order('created_at DESC').limit(50)
     end
-    render json: musics
+    render json: musics, methods: :music_url
   end
 end
