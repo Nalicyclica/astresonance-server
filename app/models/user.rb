@@ -14,6 +14,4 @@ class User < ActiveRecord::Base
 
   PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
   validates_format_of :password, with: PASSWORD_REGEX, message: 'must contain alphabets and numbers'
-
-  has_many :musics
 end
