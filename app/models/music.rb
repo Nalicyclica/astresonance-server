@@ -1,4 +1,6 @@
 class Music < ApplicationRecord
+  include Rails.application.routes.url_helpers
+
   with_options presence: true do
     validates :category_id
     validates :genre_id
@@ -16,5 +18,9 @@ class Music < ApplicationRecord
     return if music.attached?
 
     errors.add(:music, 'must be attached')
+  end
+
+  def music_url
+    music.attached? ? url_for(music) : nil
   end
 end
