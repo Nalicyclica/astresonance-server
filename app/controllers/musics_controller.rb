@@ -15,4 +15,20 @@ class MusicsController < ApplicationController
     end
     render json: musics, methods: :music_url
   end
+  
+  def create
+    music = Music.new(music_params)
+    if music.save
+      render json: music, methods: :music_url
+    else
+      render json: music.errors
+    end
+  end
+
+  private
+
+  def music_params
+    params_key = [:category_id,:genre_id,:music]
+    params.require(:music).permit(params_key).merge(user_id: params[:user_id])
+  end
 end
