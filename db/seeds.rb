@@ -5,8 +5,13 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+# 30.times do |i|
+#   music = Music.create( category_id: i%3, genre_id: i%10, user_id: 1)
+#   music.music.attach(io: File.open('public/musics/ゴブリンのテーマ.mp3'), filename: 'Gobbrin.mp3', content_type: 'music/mp3')
+#   music.save
+# end
+4.times do |j|
 30.times do |i|
-  music = Music.create( category_id: i%3, genre_id: i%10, user_id: 1)
-  music.music.attach(io: File.open('public/musics/ゴブリンのテーマ.mp3'), filename: 'Gobbrin.mp3', content_type: 'music/mp3')
-  music.save
+  Title.create( title: "海と月", color: "#000000", user_id: j+2, music_id: i+1 )
+end
 end

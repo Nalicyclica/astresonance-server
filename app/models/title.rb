@@ -2,7 +2,7 @@ class Title < ApplicationRecord
   with_options presence: true do
     validates :title
     validates :color, format: { with: /\A#[A-Fa-f\d]{6}\z/, message: 'must be a color format of #aaaaaa' }
-    validates :user
+    validates :user, :uniqueness => {:scope => :music_id}
     validates :music
   end
 

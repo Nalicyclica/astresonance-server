@@ -11,6 +11,11 @@ RSpec.describe Title, type: :model do
       it '正しい情報を入力すると、タイトル登録できること' do
         expect(@title).to be_valid
       end
+      it 'ユーザーは違う音楽に対してそれぞれタイトル登録をできること' do
+        music2 = FactoryBot.create(:music)
+        @title2 = FactoryBot.create(:title, user_id: @title.user_id, music_id: music2.id)
+        expect(@title).to be_valid
+      end
     end
     context '間違ったデータだとtitle登録が行えない' do
       it 'タイトルが必須であること。' do
@@ -47,6 +52,11 @@ RSpec.describe Title, type: :model do
         @title.user_id = ''
         @title.valid?
         expect(@title.errors.full_messages).to include('User must exist')
+      end
+      it 'ユーザーとMusicの組み合わせは一意であること' do
+        @title2 = FactoryBot.create(:title, user_id: @title.user_id, music_id: @title.music_id)
+        @title.valid?
+        expect(@title.errors.full_messages).to include("User has already been taken")
       end
       it '音楽が空だと登録できないこと' do
         @title.music_id = ''

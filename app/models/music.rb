@@ -10,7 +10,7 @@ class Music < ApplicationRecord
   validate :music_attached
 
   belongs_to :user
-  has_many :titles
+  has_many :titles, dependent: :destroy
   has_one_attached :music
 
   private

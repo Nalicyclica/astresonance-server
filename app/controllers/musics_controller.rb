@@ -25,6 +25,13 @@ class MusicsController < ApplicationController
     end
   end
 
+  def show
+    @music = Music.find(params[:id])
+    @user_title = @music.titles.find_by(user_id: params[:user_id])
+    render json: @music.as_json( :include => [:titles => { :include => :user}]).merge(user_title: @user_title)
+
+  end
+
   private
 
   def music_params
