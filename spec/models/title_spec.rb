@@ -56,7 +56,7 @@ RSpec.describe Title, type: :model do
       it 'ユーザーとMusicの組み合わせは一意であること' do
         @title2 = FactoryBot.create(:title, user_id: @title.user_id, music_id: @title.music_id)
         @title.valid?
-        expect(@title.errors.full_messages).to include("User has already been taken")
+        expect(@title.errors.full_messages).to include('User has already been taken')
       end
       it '音楽が空だと登録できないこと' do
         @title.music_id = ''
