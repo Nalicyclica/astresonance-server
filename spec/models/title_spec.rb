@@ -19,39 +19,39 @@ RSpec.describe Title, type: :model do
         expect(@title.errors.full_messages).to include("Title can't be blank")
       end
       it 'カラーが必須であること。' do
-        @title.color = ""
+        @title.color = ''
         @title.valid?
         expect(@title.errors.full_messages).to include("Color can't be blank")
       end
       it 'カラーは、#がつく６桁のカラーフォマットであること' do
-        @title.color = "#00abc"
+        @title.color = '#00abc'
         @title.valid?
-        expect(@title.errors.full_messages).to include("Color must be a color format of #aaaaaa")
+        expect(@title.errors.full_messages).to include('Color must be a color format of #aaaaaa')
       end
       it 'カラーは、半角英字のみでは登録できないこと' do
-        @title.color = "aaaaaaa"
+        @title.color = 'aaaaaaa'
         @title.valid?
-        expect(@title.errors.full_messages).to include("Color must be a color format of #aaaaaa")
+        expect(@title.errors.full_messages).to include('Color must be a color format of #aaaaaa')
       end
       it 'カラーは、半角数字のみでは登録できないこと' do
-        @title.color = "1234567"
+        @title.color = '1234567'
         @title.valid?
-        expect(@title.errors.full_messages).to include("Color must be a color format of #aaaaaa")
+        expect(@title.errors.full_messages).to include('Color must be a color format of #aaaaaa')
       end
       it 'アイコンカラーは、全角文字では登録できないこと' do
-        @title.color = "アイウエオか"
+        @title.color = 'アイウエオか'
         @title.valid?
-        expect(@title.errors.full_messages).to include("Color must be a color format of #aaaaaa")
+        expect(@title.errors.full_messages).to include('Color must be a color format of #aaaaaa')
       end
       it 'ユーザーが空だと登録できないこと' do
-        @title.user_id = ""
+        @title.user_id = ''
         @title.valid?
-        expect(@title.errors.full_messages).to include("User must exist")
+        expect(@title.errors.full_messages).to include('User must exist')
       end
       it '音楽が空だと登録できないこと' do
-        @title.music_id = ""
+        @title.music_id = ''
         @title.valid?
-        expect(@title.errors.full_messages).to include("Music must exist")
+        expect(@title.errors.full_messages).to include('Music must exist')
       end
     end
   end

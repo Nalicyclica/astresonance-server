@@ -15,7 +15,7 @@ class MusicsController < ApplicationController
     end
     render json: musics, methods: :music_url
   end
-  
+
   def create
     music = Music.new(music_params)
     if music.save
@@ -28,7 +28,7 @@ class MusicsController < ApplicationController
   private
 
   def music_params
-    params_key = [:category_id,:genre_id,:music]
+    params_key = [:category_id, :genre_id, :music]
     params.require(:music).permit(params_key).merge(user_id: params[:user_id])
   end
 end
