@@ -10,7 +10,8 @@ class TitlesController < ApplicationController
   end
 
   def show
-    render json: @title.as_json(include: [comments: { include: :user }])
+    music = Music.find_by(title_id: @title.id).as_json
+    render json: @title.as_json(include: [comments: { include: :user }]).merge(music)
   end
 
   def destroy

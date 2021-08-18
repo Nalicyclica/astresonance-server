@@ -5,7 +5,6 @@ class ApplicationController < ActionController::API
   private
 
   def user_auth_params
-    devise_parameter_sanitizer.permit(:sign_up,
-                                      keys: [:nickname, :icon_color])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:nickname, :icon_color, :introduce])
   end
 end
