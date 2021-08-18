@@ -8,4 +8,5 @@ class Title < ApplicationRecord
 
   belongs_to :user
   belongs_to :music
+  has_many :comments, dependent: :destroy
 end
