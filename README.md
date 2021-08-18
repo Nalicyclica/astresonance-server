@@ -8,6 +8,7 @@
 | email              | string | null: false, unique: true |
 | encrypted_password | string | null: false               |
 | icon_color         | string | null: false               |
+| introduce          | text   | default: "よろしくお願いします" |
 
 ### Association
 
@@ -59,17 +60,6 @@
 
 - belongs_to :user
 - belongs_to :title
-
-## Profileテーブル
-
-| Column             | Type       | Options                        |
-| ------------------ | ---------- | ------------------------------ |
-| introduce          | text       |                                |
-| user               | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :user
 
 ## Categoryの種類
     { id: 0, name: 'other' },
