@@ -8,6 +8,11 @@ class TitlesController < ApplicationController
     end
   end
 
+  def show
+    title = Title.find(params[:id])
+    render json: title.as_json(include: [comments: { include: :user }])
+  end
+
   private
 
   def title_params
