@@ -16,4 +16,5 @@ class User < ActiveRecord::Base
   validates_format_of :password, with: PASSWORD_REGEX, message: 'must contain alphabets and numbers'
 
   has_many :musics
+  has_many :titles
 end
