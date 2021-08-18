@@ -38,7 +38,10 @@ class MusicsController < ApplicationController
     # 後でuserはnameやicon_color情報のみ絞るようにSQLで書き直すこと
     @user_title = @music.titles.find_by(user_id: params[:user_id])
     if @user_title
-      render json: @music.as_json(include: [titles: { include: :user }]).merge(user_title: @user_title, music: @music.music_url)
+      # titles = Title.find_by_sql(["SELECT titles.* users.nickname users.icon_color FROM titles WHERE titles.music_id=? INNER JOIN users ON titles.user_id=users.id", @music.id])
+      titles = Title.where(music_id: @music.id).joins(:user).select('titles.*', 'users.nickname', 'users.icon_color')
+      render json: @music.as_json.merge(titles: titles, user_title: @user_title, music: @music.music_url)
+      # render json: @music.as_json(include: [titles: { include: :user }]).merge(user_title: @user_title, music: @music.music_url)
     else
       render json: @music, methods: music_url
     end
