@@ -12,7 +12,7 @@ class TitlesController < ApplicationController
   def show
     render json: @title.as_json(include: [comments: { include: :user }])
   end
-  
+
   def destroy
     if @title.destroy
       render json: @title
@@ -22,7 +22,7 @@ class TitlesController < ApplicationController
   end
 
   private
-  
+
   def title_params
     params_key = [:title, :color]
     params.require(:title).permit(params_key).merge(user_id: params[:user_id], music_id: params[:music_id])
