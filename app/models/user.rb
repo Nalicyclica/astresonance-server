@@ -12,8 +12,9 @@ class User < ActiveRecord::Base
     validates :icon_color, format: { with: /\A#[A-Fa-f\d]{6}\z/, message: 'must be a color format of #aaaaaa' }
   end
 
-  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
-  validates_format_of :password, with: PASSWORD_REGEX, message: 'must contain alphabets and numbers'
+  # passwordにバリデーションかけるとログインした時にauthenticate tokenを返してくれなくなる（原因不明）
+  # 自分でvalidate実装しても不可
+  # validates :password, format: {with: /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i, message: 'must contain alphabets and numbers' }
 
   has_many :musics
   has_many :titles
