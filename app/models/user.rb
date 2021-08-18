@@ -17,4 +17,5 @@ class User < ActiveRecord::Base
 
   has_many :musics
   has_many :titles
+  has_many :comments
 end

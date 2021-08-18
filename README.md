@@ -51,7 +51,7 @@
 
 | Column             | Type       | Options                        |
 | ------------------ | ---------- | ------------------------------ |
-| text               | text       | null: false                    |
+| text               | string     | null: false                    |
 | user               | references | null: false, foreign_key: true |
 | title              | references | null: false, foreign_key: true |
 

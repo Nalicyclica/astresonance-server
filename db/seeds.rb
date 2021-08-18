@@ -10,8 +10,13 @@
 #   music.music.attach(io: File.open('public/musics/ゴブリンのテーマ.mp3'), filename: 'Gobbrin.mp3', content_type: 'music/mp3')
 #   music.save
 # end
+# 4.times do |j|
+# 30.times do |i|
+#   Title.create( title: "海と月", color: "#000000", user_id: j+2, music_id: i+1 )
+# end
+# end
 4.times do |j|
-30.times do |i|
-  Title.create( title: "海と月", color: "#000000", user_id: j+2, music_id: i+1 )
+90.times do |i|
+  Comment.create( text: "いいタイトルですね", user_id: j+1, title_id: i+1 )
 end
 end
