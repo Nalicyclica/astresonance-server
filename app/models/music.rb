@@ -13,15 +13,15 @@ class Music < ApplicationRecord
   has_many :titles, dependent: :destroy
   has_one_attached :music
 
+  def music_url
+    music.attached? ? url_for(music) : nil
+  end
+
   private
 
   def music_attached
     return if music.attached?
 
     errors.add(:music, 'must be attached')
-  end
-
-  def music_url
-    music.attached? ? url_for(music) : nil
   end
 end

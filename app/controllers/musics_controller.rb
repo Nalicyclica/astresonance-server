@@ -35,8 +35,13 @@ class MusicsController < ApplicationController
   end
 
   def show
+    # 後でuserはnameやicon_color情報のみ絞るようにSQLで書き直すこと
     @user_title = @music.titles.find_by(user_id: params[:user_id])
-    render json: @music.as_json(include: [titles: { include: :user }]).merge(user_title: @user_title)
+    if @user_title
+      render json: @music.as_json(include: [titles: { include: :user }]).merge(user_title: @user_title, music: @music.music_url)
+    else
+      render json: @music, methods: music_url
+    end
   end
 
   def destroy
