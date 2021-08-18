@@ -1,4 +1,5 @@
 class MusicsController < ApplicationController
+  before_action :find_music_by_id, only: [:show, :destroy]
   def index
     if params[:genre_id] && params[:category_id]
       genre = params[:genre_id].to_i
@@ -26,9 +27,16 @@ class MusicsController < ApplicationController
   end
 
   def show
-    @music = Music.find(params[:id])
     @user_title = @music.titles.find_by(user_id: params[:user_id])
     render json: @music.as_json(include: [titles: { include: :user }]).merge(user_title: @user_title)
+  end
+
+  def destroy
+    if @music.destroy
+      render json: @music
+    else
+      render json: @music.errors
+    end
   end
 
   private
@@ -36,5 +44,9 @@ class MusicsController < ApplicationController
   def music_params
     params_key = [:category_id, :genre_id, :music]
     params.require(:music).permit(params_key).merge(user_id: params[:user_id])
+  end
+
+  def find_music_by_id
+    @music = Music.find(params[:id])
   end
 end
