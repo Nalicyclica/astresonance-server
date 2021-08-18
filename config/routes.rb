@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :musics, only: [:index, :create, :show, :destroy] do
     resources :titles, only: [:create]
   end
-  resources :titles, only: [:show] do
+  resources :titles, only: [:show, :destroy] do
     resources :comments, only: [:create]
   end
 end
