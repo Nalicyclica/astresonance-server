@@ -2,12 +2,12 @@ class TitlesController < ApplicationController
   before_action :authenticate_user!
   before_action :find_title_by_id, only: [:show, :destroy]
   before_action :is_owner, only: [:destroy]
+  before_action :is_owned_music, only: [:create]
   def create
-    title = Title.new(title_params)
-    if title.save
-      render json: title
+    if @title.save
+      render json: @title
     else
-      render status: 400, json: title.errors
+      render status: 400, json: @title.errors
     end
   end
 
@@ -47,6 +47,14 @@ class TitlesController < ApplicationController
   def is_owner
     unless current_user.id == @title.user_id
       @title.errors.add(:title, ' is Not owned')
+      render status: 400, json: @title.errors
+    end
+  end
+
+  def is_owned_music
+    @title = Title.new(title_params)
+    if @title.music.user_id == current_user.id
+      @title.errors.add(:music, "posted by you can't be titled")
       render status: 400, json: @title.errors
     end
   end
