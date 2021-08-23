@@ -18,7 +18,7 @@ class TitlesController < ApplicationController
       comments = Comment.where(title_id: @title.id).joins(:user).select('comments.*', 'users.nickname',
                                                                         'users.icon_color').as_json
       render json: @title.as_json.merge(comments: comments, user_title: @user_title,
-                                        music: @music.as_json.merge(music: @music.music_url))
+                                        music: @music.as_json.merge(music_url: @music.music_url))
     else
       @music.errors.add(:music, 'has not titled')
       render status: 400, json: @music
