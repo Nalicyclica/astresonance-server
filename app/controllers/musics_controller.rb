@@ -61,7 +61,7 @@ class MusicsController < ApplicationController
 
   def music_params
     params_key = [:category_id, :genre_id, :music]
-    params.require(:music).permit(params_key).merge(user_id: current_user.id)
+    params.permit(params_key).merge(user_id: current_user.id)
   end
 
   def info_params
