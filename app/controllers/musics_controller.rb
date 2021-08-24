@@ -39,7 +39,7 @@ class MusicsController < ApplicationController
   def show
     if user_signed_in?
       @user_title = @music.titles.find_by(user_id: current_user.id)
-      if @user_title
+      if @user_title || current_user.id == @music.user_id
         # titles = Title.find_by_sql(["SELECT titles.* users.nickname users.icon_color FROM titles WHERE titles.music_id=? INNER JOIN users ON titles.user_id=users.id", @music.id])
         titles = Title.where(music_id: @music.id).joins(:user).select('titles.*', 'users.nickname', 'users.icon_color')
         return render json: @music.as_json.merge(titles: titles, user_title: @user_title, music_url: @music.music_url)
