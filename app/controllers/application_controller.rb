@@ -6,5 +6,6 @@ class ApplicationController < ActionController::API
 
   def user_auth_params
     devise_parameter_sanitizer.permit(:sign_up, keys: [:nickname, :icon_color, :introduce])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:icon_color, :introduce])
   end
 end
