@@ -14,7 +14,7 @@ class TitlesController < ApplicationController
   def show
     @music = Music.find(@title.music_id)
     @user_title = @music.titles.find_by(user_id: current_user.id)
-    if @user_title
+    if @user_title || @music.user_id == current_user.id
       comments = Comment.where(title_id: @title.id).joins(:user).select('comments.*', 'users.nickname',
                                                                         'users.icon_color').as_json
       render json: @title.as_json.merge(comments: comments, user_title: @user_title,
