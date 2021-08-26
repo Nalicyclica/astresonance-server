@@ -1,8 +1,8 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   def show
-    owner = User.find(params[:id])
-    titles = Title.where(user_id: owner.id).as_json(include: :music)
+    owner = User.select('users.id', 'users.nickname', 'users.icon_color', 'users.introduce').find(params[:id])
+    titles = Title.where(user_id: owner.id).as_json
     comments = Comment.where(user_id: owner.id).as_json(include: :title)
     musics = Music.where(user_id: owner.id).joins(:titles).select('musics.*',
                                                                   'titles.title').where(titles: { user_id: current_user.id })
