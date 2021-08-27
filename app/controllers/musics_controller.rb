@@ -43,7 +43,8 @@ class MusicsController < ApplicationController
         owner = User.find(@music.user_id)
         # titles = Title.find_by_sql(["SELECT titles.* users.nickname users.icon_color FROM titles WHERE titles.music_id=? INNER JOIN users ON titles.user_id=users.id", @music.id])
         titles = Title.where(music_id: @music.id).joins(:user).select('titles.*', 'users.nickname', 'users.icon_color')
-        return render json: @music.as_json.merge(nickname: owner.nickname, icon_color: owner.icon_color, titles: titles, user_title: @user_title, music_url: @music.music_url)
+        return render json: @music.as_json.merge(nickname: owner.nickname, icon_color: owner.icon_color, titles: titles,
+                                                 user_title: @user_title, music_url: @music.music_url)
         # render json: @music.as_json(include: [titles: { include: :user }]).merge(user_title: @user_title, music: @music.music_url)
       end
     end
