@@ -4,7 +4,7 @@ Rails.application.routes.draw do
     resources :titles, only: [:create]
   end
   resources :titles, only: [:show, :destroy] do
-    resources :comments, only: [:create]
+    resources :comments, only: [:index, :create]
   end
   resources :comments, only: [:destroy]
   resources :users, only: [:show]
