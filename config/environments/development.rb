@@ -50,5 +50,6 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  default_url_options[:host] = "localhost:3000"
+  default_url_options[:host] = ENV["ASTRESONANCE_STORAGE_HOST"]
+  # default_url_options[:protocol] = "http" <-https://からのアクセスだとChromeで勝手にhttpsにアップグレードされる
 end

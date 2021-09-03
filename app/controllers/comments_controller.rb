@@ -2,6 +2,20 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!
   before_action :find_comment_by_id, only: [:destroy]
   before_action :is_owner, only: [:destroy]
+  def index
+    @title = Title.find(params[:title_id])
+    @music = Music.find(@title.music_id)
+    @user_title = @music.titles.find_by(user_id: current_user.id)
+    if @user_title || @music.user_id == current_user.id
+      comments = Comment.where(title_id: @title.id).joins(:user).select('comments.*', 'users.nickname',
+                                                                        'users.icon_color').as_json
+      render json: comments                                                                  
+    else
+      @music.errors.add(:music, 'has not titled')
+      render status: 400, json: @music
+    end
+  end
+
   def create
     comment = Comment.new(comment_params)
     if comment.save

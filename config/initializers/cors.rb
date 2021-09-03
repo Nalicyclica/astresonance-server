@@ -7,7 +7,8 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins ENV["ASTRESONANCE_FRONT_ORIGIN"]
+    # origins "*"
+    origins ENV["ASTRESONANCE_FRONT_ORIGIN_LOCAL"], ENV["ASTRESONANCE_FRONT_ORIGIN"]
 
     resource '*',
       headers: :any,
