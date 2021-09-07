@@ -19,5 +19,4 @@ class User < ActiveRecord::Base
   has_many :musics
   has_many :titles
   has_many :comments
-  has_one_attached :icon_image
 end

@@ -1,79 +1,17 @@
-# Astresonanceのデータベース設計
+### 知らない音楽を聴いた時、風景や思い出が心に浮かんだことはありませんか？
+　　ー Astresonanceは、イメージを音楽のタイトルとして表現できる音楽SNSです 
 
-## Userテーブル
+![Astresonance](https://user-images.githubusercontent.com/77972881/132290990-71ae17ad-6a7a-49d8-983e-927cf47fc3af.gif "Astresonance")
+<h1 align="center">Astresonance</h1>
 
-| Column             | Type   | Options                   |
-| ------------------ | ------ | ------------------------- |
-| nickname           | string | null: false               |
-| email              | string | null: false, unique: true |
-| encrypted_password | string | null: false               |
-| icon_color         | string | null: false               |
-| introduce          | text   | default: "よろしくお願いします" |
+# ♬ 開発環境
+- Create React App（フロントエンド）
+- Typescript（フロントエンド）
+- Ruby on Rails
+- AWS(S3)
+- VSCode (Visual Studio Code)
 
-### Association
-
-- has_many :musics
-- has_many :titles
-- has_many :comments
-- has_one :profile
-- has_one_attached :icon
-
-## Musicテーブル
-
-| Column              | Type       | Options                        |
-| ------------------- | ---------- | ------------------------------ |
-| category_id         | integer    | null: false                    |
-| genre_id            | integer    | null: false                    |
-| user                | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :user
-- has_many :titles
-- has_one_attached :music
-
-## Titleテーブル
-
-| Column             | Type       | Options                        |
-| ------------------ | ---------- | ------------------------------ |
-| title              | string     | null: false                    |
-| color              | string     | null: false                    |
-| user               | references | null: false, foreign_key: true |
-| music              | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :user
-- belongs_to :music
-- has_many :comments
-- 空のタイトル＝視聴履歴？
-
-## Commentテーブル
-
-| Column             | Type       | Options                        |
-| ------------------ | ---------- | ------------------------------ |
-| text               | string     | null: false                    |
-| user               | references | null: false, foreign_key: true |
-| title              | references | null: false, foreign_key: true |
-
-### Association
-
-- belongs_to :user
-- belongs_to :title
-
-## Categoryの種類
-    { id: 0, name: 'other' },
-    { id: 1, name: 'melody' },
-    { id: 2, name: 'song' }
-
-## Genreの種類
-  { id: 0, name: 'other' },
-    { id: 1, name: 'Pops' },
-    { id: 2, name: 'Rocks' },
-    { id: 3, name: 'Jazzes' },
-    { id: 4, name: 'Classics' },
-    { id: 5, name: 'African world musics' },
-    { id: 6, name: 'Asian world musics' },
-    { id: 7, name: 'Europian world musics' },
-    { id: 8, name: 'Latin American world musics' },
-    { id: 9, name: 'Middle Eatern world musics' }
+# ♬ リンク
+このページは、Astresonanceサーバーサイドリポジトリのものです。
+### アプリの詳細は、フロントエンドリポジトリをご参照願います。
+### https://github.com/Nalicyclica/astresonance-front
