@@ -1,6 +1,6 @@
 class TitlesController < ApplicationController
   before_action :authenticate_user!
-  before_action :find_title_by_id, only: [:show, :destroy]
+  before_action :find_title_by_id, only: [:destroy]
   before_action :is_owner, only: [:destroy]
   before_action :is_owned_music, only: [:create]
   def create
@@ -10,16 +10,15 @@ class TitlesController < ApplicationController
       render status: 400, json: @title.errors
     end
   end
-
+  
   def show
-    @music = Music.find(@title.music_id)
-    owner = User.find(@title.user_id)
-    @user_title = @music.titles.find_by(user_id: current_user.id)
-    if @user_title || @music.user_id == current_user.id
-      render json: @title.as_json.merge(nickname: owner.nickname, icon_color: owner.icon_color)
+    title = Title.eager_load([:user, :music]).select('titles.*','users.nickname','users.icon_color', 'musics.user_id AS music_user_id').find(params[:id])
+    user_title = Title.find_by(music_id: title.music_id, user_id: current_user.id)
+    if user_title || title.music_user_id == current_user.id
+      render json: title.as_json
     else
-      @music.errors.add(:music, 'has not titled')
-      render status: 400, json: @music
+      error = title.music.errors.add(:music, 'has not titled')
+      render status: 400, json: error
     end
   end
 
@@ -55,5 +54,12 @@ class TitlesController < ApplicationController
       @title.errors.add(:music, "posted by you can't be titled")
       render status: 400, json: @title.errors
     end
+  end
+
+  def titled_or_owned?
+    title = eager_load([:user, :music]).select('titles.*','users.nickname','users.icon_color', 'musics.user_id AS music_user_id').find(params[:id])
+    user_title = find_by(music_id: title.music_id, user_id: current_user.id)
+    return true if user_title || title.music_user_id == current_user.id
+    return false
   end
 end
