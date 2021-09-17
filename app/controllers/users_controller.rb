@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   def show
     owner = User.select('users.id', 'users.nickname', 'users.icon_color', 'users.introduce').find(params[:id])
     titles = Title.where(user_id: owner.id).as_json
-    comments = Comment.where(user_id: owner.id).as_json(include: :title)
+    comments = Comment.where(user_id: owner.id).eager_load(:title).select('comments.*', 'titles.title AS title_name', "titles.music_id").as_json
     user_titles = Title.where(user_id: current_user.id).select('titles.title', 'titles.color', 'titles.music_id')
     musics = Music.joins("LEFT OUTER JOIN (#{user_titles.to_sql}) user_titles ON musics.id = user_titles.music_id").select(
       'musics.*', 'user_titles.title', 'user_titles.color'
