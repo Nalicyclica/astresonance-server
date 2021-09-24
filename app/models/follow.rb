@@ -10,6 +10,6 @@ class Follow < ApplicationRecord
   def self_follow_denied
     return if user_id != following_id
 
-    errors.add(:user, "can't follow yourself.")
+    errors.add(:user, "can't follow yourself")
   end
 end
