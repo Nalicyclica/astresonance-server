@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_18_001142) do
+ActiveRecord::Schema.define(version: 2021_09_22_085244) do
 
   create_table "active_storage_attachments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "name", null: false
@@ -41,6 +41,16 @@ ActiveRecord::Schema.define(version: 2021_08_18_001142) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["title_id"], name: "index_comments_on_title_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "follows", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "following_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["following_id"], name: "index_follows_on_following_id"
+    t.index ["user_id", "following_id"], name: "index_follows_on_user_id_and_following_id", unique: true
+    t.index ["user_id"], name: "index_follows_on_user_id"
   end
 
   create_table "musics", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -92,6 +102,8 @@ ActiveRecord::Schema.define(version: 2021_08_18_001142) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "titles"
   add_foreign_key "comments", "users"
+  add_foreign_key "follows", "users"
+  add_foreign_key "follows", "users", column: "following_id"
   add_foreign_key "musics", "users"
   add_foreign_key "titles", "musics"
   add_foreign_key "titles", "users"

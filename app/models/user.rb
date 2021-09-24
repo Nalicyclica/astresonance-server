@@ -19,4 +19,16 @@ class User < ActiveRecord::Base
   has_many :musics
   has_many :titles
   has_many :comments
+  has_many :follows
+  has_many :followings, through: :follows, source: :following
+  has_many :reverse_of_follows, class_name: 'Follow', foreign_key: 'following_id'
+  has_many :followers, through: :reverse_of_follows, source: :user
+
+  def new_following(following_user)
+    self.follows.new(following_id: following_user.id)
+  end
+
+  def following?(following_user)
+    self.followings.include?(following_user)
+  end
 end
