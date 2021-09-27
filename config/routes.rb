@@ -8,5 +8,12 @@ Rails.application.routes.draw do
     resources :comments, only: [:index, :create]
   end
   resources :comments, only: [:destroy]
-  resources :users, only: [:show]
+  resources :users, only: [:show] do
+    resources :follows, only: [:index, :create]
+    member do
+      delete 'follows', to: 'follows#destroy'
+      get 'followings', to: 'follows#followings_list'
+      get 'followers', to: 'follows#followers_list'
+    end
+  end
 end
