@@ -42,4 +42,12 @@ class User < ActiveRecord::Base
   def following?(following_user)
     self.followings.include?(following_user)
   end
+
+  def followings_list
+    self.followings.select('users.id', 'users.nickname', 'users.icon_color')
+  end
+
+  def followers_list
+    self.followers.select('users.id', 'users.nickname', 'users.icon_color')
+  end
 end

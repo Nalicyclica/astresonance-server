@@ -12,6 +12,8 @@ Rails.application.routes.draw do
     resources :follows, only: [:index, :create]
     member do
       delete 'follows', to: 'follows#destroy'
+      get 'followings', to: 'follows#followings_list'
+      get 'followers', to: 'follows#followers_list'
     end
   end
 end
